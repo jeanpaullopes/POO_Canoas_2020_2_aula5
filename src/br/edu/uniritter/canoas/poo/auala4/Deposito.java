@@ -6,6 +6,7 @@ public class Deposito extends Operacao {
 
     public Deposito(float valor) {
         super();
+        this.data = Calendar.getInstance().getTime();
         this.valor = valor;
 
 

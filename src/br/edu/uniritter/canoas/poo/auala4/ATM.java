@@ -80,13 +80,23 @@ public class ATM {
         System.out.println("Informe o nome do Cliente:");
         String nome = scanner.nextLine();
         System.out.println("Informe o telefone do Cliente:");
-        String fone = scanner.nextLine();
+        String fone;
+        fone = scanner.nextLine();
+        //leia(fone)
         System.out.println("Informe o nº da conta:");
         int conta = scanner.nextInt();
         System.out.println("Informe o nº da agência:");
         int ag = scanner.nextInt();
         Cliente cli = new Cliente(nome,fone);
-        ContaCorrente cc = new ContaCorrente(conta, ag, 0, cli);
+        System.out.println("Conta Especial? (1.sim 2.Não");
+        int resp = scanner.nextInt();
+
+        ContaCorrente cc;
+        if (resp != 1) {
+            cc = new ContaCorrente(conta, ag, 0, cli);
+        } else {
+            cc = new ContaEspecial(conta, ag, 0, cli);
+        }
         this.contasCorrente.add(cc);
 
     }
@@ -133,6 +143,9 @@ public class ATM {
         if(opcao == 3) {
             this.depositar(conta);
         }
+        if(opcao == 4) {
+            this.sacar(conta);
+        }
         return opcao;
     }
     private void depositar(ContaCorrente conta) {
@@ -140,9 +153,18 @@ public class ATM {
         System.out.println("informe o valor do depósito: ");
         float valor = scanner.nextFloat();
         conta.depositar(valor);
-
-
     }
+    private void sacar(ContaCorrente conta) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("informe o valor do saque: ");
+        float valor = scanner.nextFloat();
+        if (conta.sacar(valor)) {
+            System.out.println("saque realizado");
+        } else {
+            System.out.println("Saque NÃO REALIZADO. VERIFIQUE O SALDO.");
+        };
+    }
+
 }
 // && and e
 // || or ou

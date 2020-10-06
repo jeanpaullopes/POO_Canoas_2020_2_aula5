@@ -2,13 +2,15 @@ package br.edu.uniritter.canoas.poo.auala4;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
 
 public class ContaCorrente {
-    private int numero;
-    private int agencia;
-    private float saldo;
-    private Cliente cliente;
-    private List<Operacao> movimentos;
+    protected  int numero;
+    protected  int agencia;
+    protected  float saldo;
+    protected  Cliente cliente;
+    protected List<Operacao> movimentos;
 
     //Construtor de objeto em branco
     public ContaCorrente() {
@@ -22,6 +24,14 @@ public class ContaCorrente {
         this.cliente = cliente;
         this.movimentos = new ArrayList<>();
         this.depositar(saldoInicial);
+
+    }
+    public ContaCorrente(int numero, int agencia,Cliente cliente) {
+        this.numero = numero;
+        this.agencia = agencia;
+        this.cliente = cliente;
+        this.movimentos = new ArrayList<>();
+        //this.depositar(saldoInicial);
 
     }
 
@@ -64,10 +74,15 @@ public class ContaCorrente {
     }
     public boolean sacar(float valor) {
         boolean retorno = false;
-        if (this.saldo >= valor) {
-            Saque saque = new Saque(valor);
-            this.movimentos.add(saque);
-            this.saldo = this.saldo - valor;
+        if (getSaldo() >= valor) {
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Você está prestes a sacar, confirma? 1.Sim ");
+            int i = scan.nextInt();
+            if (i == 1) {
+                Saque saque = new Saque(valor);
+                this.movimentos.add(saque);
+                this.saldo = this.saldo - valor;
+            }
             retorno = true;
         }
         return retorno;
@@ -82,7 +97,7 @@ public class ContaCorrente {
     public String toString() {
         String ret = "";
         if (this.cliente == null) {
-            ret = "Conta ainda não inicliazada.";
+            ret = "Conta ainda não iniciazada.";
         } else {
             ret = "conta/Agência: "+this.numero+"/"+this.agencia+" - Cliente: "+this.cliente.getNome()+" saldo: "+this.saldo;
         }
